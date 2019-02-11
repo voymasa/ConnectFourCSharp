@@ -140,28 +140,28 @@ namespace ConnectFourFormApp
             table.placeChecker(table.CurrentCol);
             updateTable();
             
-            if (table.checkWinH())
+			if (table.CheckForWinRight())
             {
                 MessageBox.Show(txtBxPlayer.Text + " has won!");
                 table.resetTable();
                 setVisibility(false);
                 updateTable();
             }
-            else if (table.checkWinV())
+			else if (table.CheckForWinDown())
             {
                 MessageBox.Show(txtBxPlayer.Text + " has won!");
                 table.resetTable();
                 setVisibility(false);
                 updateTable();
             }
-            else if (table.checkWinDR())
+			else if (table.CheckForWinDownRight())
             {
                 MessageBox.Show(txtBxPlayer.Text + " has won!");
                 table.resetTable();
                 setVisibility(false);
                 updateTable();
             }
-            else if (table.checkWinUR())
+			else if (table.CheckForWinUpRight())
             {
                 MessageBox.Show(txtBxPlayer.Text + " has won!");
                 table.resetTable();

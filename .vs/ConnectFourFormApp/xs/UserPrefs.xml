@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{D860B1C3-3F1C-4D30-B17A-0F2A33494F89}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ConnectFourApp.cs">
+    <Files>
+      <File FileName="ConnectFourTable.cs" Line="184" Column="12" />
+      <File FileName="ConnectFourApp.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ConnectFourFormApp" expanded="True">
+            <Node name="ConnectFourFormApp" expanded="True">
+              <Node name="References" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="ConnectFourApp.cs" expanded="True" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.ConnectFourFormApp PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

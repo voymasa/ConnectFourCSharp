@@ -123,6 +123,71 @@ namespace ConnectFourFormApp
             }
         }
 
+		/*
+         * Author: Aaron Voymas
+         * Date: 9/6/18
+         * Reset an integer to 0 and return the value
+        */
+		void ResetCounter(out int num)
+		{
+			num = 0;
+		}
+
+		/*
+         * Author: Aaron Voymas
+         * Date: 9/6/18
+         * Set a character equal to another character
+        */
+		char SetChecker(char value)
+		{
+			return value;
+		}
+
+		/*
+         * Author: Aaron Voymas
+         * Date: 9/6/18
+         * Check the table for a win within a single row.
+         * This is version 2 of the method.
+        */
+		public bool CheckForWinRight()
+		{
+			int count; // keep track of the number of consecutive checkers
+			char piece; // the checker currently being counted
+			bool win = false; // win flag passed back to the calling method         
+
+			// iterate through each row
+			for (int y = 0; y < c4Table.GetLength(0); y++)
+			{
+				// Setup the variables to check in this row
+				ResetCounter(out count);
+				piece = SetChecker(' ');
+
+				// iterate through each place in the row
+				for (int x = 0; x < c4Table.GetLength(1); x++)
+				{
+					// if it is another of the same checker
+					if (piece.Equals(c4Table[y, x]))
+					{
+						count++; // increase count
+
+						// check for win
+						if ((piece.Equals('B') || piece.Equals('R')) && count >= 4)
+						{
+							win = true;
+							return win;
+						}
+					}
+					else if (!piece.Equals(c4Table[y, x]))
+					{
+						ResetCounter(out count); // because it broke the streak
+						piece = SetChecker(c4Table[y, x]); // start counting this kind of checker
+						count++; // counts the first checker
+					}
+				}
+			}
+			return win;
+		}
+
         /*
          * Check the table for a win in a single row.
         */
@@ -137,15 +202,16 @@ namespace ConnectFourFormApp
             {
                 for (int j = 0; j < c4Table.GetLength(1); j++)
                 {
-                    if (coin != c4Table[i, j]) // Resets the counter if a different piece is found
+					if (!coin.Equals(c4Table[i, j])) // Resets the counter if a different piece is found
                     {
                         coin = c4Table[i, j];
                         count = 1;
+                        Console.WriteLine("different piece. counter reset");
                     }
-                    else
+					else if(coin.Equals(c4Table[i, j]))
                     {
                         count++;
-
+						Console.WriteLine("same piece. increasing count");
                         // Checks to see if the count is four if and only if it is a player piece
                         if ((coin == 'R' || coin == 'B') && count == 4)
                         {
@@ -163,6 +229,51 @@ namespace ConnectFourFormApp
             // This return only occurs when four consecutive player pieces are not found
             return win; 
         }
+        
+		/*
+         * Author: Aaron Voymas
+         * Date: 9/6/18
+         * Check the table for a win within a single column.
+         * This is version 2 of the method.
+        */
+        public bool CheckForWinDown()
+        {
+            int count; // keep track of the number of consecutive checkers
+            char piece; // the checker currently being counted
+            bool win = false; // win flag passed back to the calling method         
+
+            // iterate through each row
+            for (int x = 0; x < c4Table.GetLength(1); x++)
+            {
+                // Setup the variables to check in this row
+                ResetCounter(out count);
+                piece = SetChecker(' ');
+                
+                // iterate through each place in the row
+                for (int y = 0; y < c4Table.GetLength(0); y++)
+                {
+                    // if it is another of the same checker
+                    if (piece.Equals(c4Table[y, x]))
+                    {
+                        count++; // increase count
+
+                        // check for win
+                        if ((piece.Equals('B') || piece.Equals('R')) && count >= 4)
+                        {
+                            win = true;
+                            return win;
+                        }
+                    }
+                    else if (!piece.Equals(c4Table[y, x]))
+                    {
+                        ResetCounter(out count); // because it broke the streak
+                        piece = SetChecker(c4Table[y, x]); // start counting this kind of checker
+                        count++; // counts the first checker
+                    }
+                }
+            }
+            return win;
+        }
 
         /*
          * This method works the same as the checkWinH method but iterates column by column
@@ -177,7 +288,7 @@ namespace ConnectFourFormApp
             {
                 for (int j = 0; j < c4Table.GetLength(0); j++)
                 {
-                    if (coin != c4Table[j, i])
+					if (!coin.Equals(c4Table[j, i]))
                     {
                         coin = c4Table[j, i];
                         count = 1;
@@ -198,6 +309,110 @@ namespace ConnectFourFormApp
                     }
                 }
                 count = 1;
+            }
+            return win;
+        }
+
+		/*
+         * Author: Aaron Voymas
+         * Date: 9/6/18
+         * Check the table for a win within a diagonal from top left to bottom right.
+         * This is version 2 of the method.
+        */
+        public bool CheckForWinDownRight()
+        {
+            int count; // keep track of the number of consecutive checkers
+            char piece; // the checker currently being counted
+            bool win = false; // win flag passed back to the calling method         
+
+			int yHalfLength = ((c4Table.GetLength(0) - 1) / 2);
+			int xHalfLength = ((c4Table.GetLength(1) - 1) / 2);
+            
+            // iterate through each row for half of the table
+            for (int y = 0; y <= yHalfLength; y++)
+            {
+                // Setup the variables to check in this row
+                ResetCounter(out count);
+                piece = SetChecker(' ');
+
+                // iterate through each place in the row
+                for (int x = 0; x <= xHalfLength; x++)
+                {
+					// iterate diagnolly for four places
+					for (int addNum = 0; addNum <= xHalfLength; addNum++)
+					{
+						// if it is another of the same checker
+						if (piece.Equals(c4Table[(y + addNum), (x + addNum)]))
+                        {
+                            count++; // increase count
+
+                            // check for win
+                            if ((piece.Equals('B') || piece.Equals('R')) && count >= 4)
+                            {
+                                win = true;
+                                return win;
+                            }
+                        }
+						else if (!piece.Equals(c4Table[(y + addNum), (x + addNum)]))
+                        {
+                            ResetCounter(out count); // because it broke the streak
+                            piece = SetChecker(c4Table[y, x]); // start counting this kind of checker
+                            count++; // counts the first checker
+                        }
+					}
+                }
+            }
+            return win;
+        }
+
+		/*
+         * Author: Aaron Voymas
+         * Date: 9/6/18
+         * Check the table for a win within a diagonal from bottom left to top right.
+         * This is version 2 of the method.
+        */
+        public bool CheckForWinUpRight()
+        {
+            int count; // keep track of the number of consecutive checkers
+            char piece; // the checker currently being counted
+            bool win = false; // win flag passed back to the calling method         
+
+            int yHalfLength = ((c4Table.GetLength(0) - 1) / 2);
+            int xHalfLength = ((c4Table.GetLength(1) - 1) / 2);
+
+            // iterate through each row for half of the table
+			for (int y = (yHalfLength + 1); y < c4Table.GetLength(0); y++)
+            {
+                // Setup the variables to check in this row
+                ResetCounter(out count);
+                piece = SetChecker(' ');
+
+                // iterate through each place in the row
+                for (int x = 0; x <= xHalfLength; x++)
+                {
+                    // iterate diagnolly for four places
+                    for (int addNum = 0; addNum <= xHalfLength; addNum++)
+                    {
+                        // if it is another of the same checker
+                        if (piece.Equals(c4Table[(y - addNum), (x + addNum)]))
+                        {
+                            count++; // increase count
+
+                            // check for win
+                            if ((piece.Equals('B') || piece.Equals('R')) && count >= 4)
+                            {
+                                win = true;
+                                return win;
+                            }
+                        }
+                        else if (!piece.Equals(c4Table[(y - addNum), (x + addNum)]))
+                        {
+                            ResetCounter(out count); // because it broke the streak
+                            piece = SetChecker(c4Table[y, x]); // start counting this kind of checker
+                            count++; // counts the first checker
+                        }
+                    }
+                }
             }
             return win;
         }
